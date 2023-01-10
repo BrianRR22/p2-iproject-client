@@ -7,7 +7,10 @@ export const useHololiveStore = defineStore('hololive', {
     state() {
         return {
             song: [],
-            name: ''
+            name: '',
+            access_token: '',
+            username: '',
+            idols: []
         }
     },
     actions: {
@@ -34,13 +37,13 @@ export const useHololiveStore = defineStore('hololive', {
                 console.error(error);
             });
         },
-        async fetchCategories() {
+        async fetchIdols() {
             try {
                 const { data } = await axios({
                     method: 'GET',
-                    url: origin + `/customers/categories`
+                    url: origin + `/idols/`
                 })
-                this.song
+                this.idols= data
             } catch (error) {
                 console.log(error);
             }
@@ -59,6 +62,35 @@ export const useHololiveStore = defineStore('hololive', {
                 )
                 this.router.push('/login')
             } catch (error) {
+                let messageError = error.response.data.message
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: messageError,
+                    footer: '<a href="">Why do I have this issue?</a>'
+                })
+            }
+        },
+        async handleLogin(inputLogin) {
+            try {
+                const { data } = await axios({
+                    method: 'POST',
+                    url: origin + '/users/login',
+                    data: inputLogin
+                })
+                localStorage.setItem("access_token", data.access_token)
+                localStorage.setItem("username", data.username)
+                this.access_token = data.access_token
+                this.username = data.username
+                this.fetchIdols
+                Swal.fire(
+                    'Login',
+                    'Success to Login',
+                    'success'
+                )
+                this.router.push('/')
+            } catch (error) {
+                console.log(error);
                 let messageError = error.response.data.message
                 Swal.fire({
                     icon: 'error',
