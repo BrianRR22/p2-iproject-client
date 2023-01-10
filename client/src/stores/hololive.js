@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 
+origin= 'http://localhost:3000'
 
 export const useHololiveStore = defineStore('hololive', {
     state() {
@@ -42,6 +43,29 @@ export const useHololiveStore = defineStore('hololive', {
                 this.song
             } catch (error) {
                 console.log(error);
+            }
+        },
+        async handleRegis(inputRegistrasi) {
+            try {
+                const { data } = await axios({
+                    method: 'POST',
+                    url: origin + '/users/register',
+                    data: inputRegistrasi
+                })
+                Swal.fire(
+                    'Register',
+                    'Success to Register',
+                    'success'
+                )
+                this.router.push('/login')
+            } catch (error) {
+                let messageError = error.response.data.message
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: messageError,
+                    footer: '<a href="">Why do I have this issue?</a>'
+                })
             }
         },
     },
