@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 
-origin= 'http://localhost:3000'
+origin = 'http://localhost:3000'
 
 export const useHololiveStore = defineStore('hololive', {
     state() {
@@ -10,7 +10,8 @@ export const useHololiveStore = defineStore('hololive', {
             name: '',
             access_token: '',
             username: '',
-            idols: []
+            idols: [],
+            branches: []
         }
     },
     actions: {
@@ -26,24 +27,37 @@ export const useHololiveStore = defineStore('hololive', {
             };
 
             axios.request(options)
-            .then(function (response) {
-                // console.log(response.data.data.artist.discography.singles.items);
-                let song= response.data.data.artist.discography.singles.items
-                song.forEach(el => {
-                    console.log(el.releases.items[0].name); //judul lagu spotify
+                .then(function (response) {
+                    // console.log(response.data.data.artist.discography.singles.items);
+                    let song = response.data.data.artist.discography.singles.items
+                    song.forEach(el => {
+                        console.log(el.releases.items[0].name); //judul lagu spotify
+                    });
+                })
+                .catch(function (error) {
+                    console.error(error);
                 });
-            })
-            .catch(function (error) {
-                console.error(error);
-            });
         },
-        async fetchIdols() {
+        async fetchIdols(branchId = null) {
             try {
                 const { data } = await axios({
                     method: 'GET',
-                    url: origin + `/idols/`
+                    url: origin + `/idols?${branchId ? `filter[branch]=${branchId}` : ''}`
                 })
-                this.idols= data
+                this.idols = data
+                console.log(data);
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        async fetchBranch() {
+            try {
+                const { data } = await axios({
+                    method: 'GET',
+                    url: origin + `/idols/branches`
+                })
+                this.branches = data
+                console.log(data);
             } catch (error) {
                 console.log(error);
             }
@@ -82,7 +96,8 @@ export const useHololiveStore = defineStore('hololive', {
                 localStorage.setItem("username", data.username)
                 this.access_token = data.access_token
                 this.username = data.username
-                this.fetchIdols
+                this.fetchIdols()
+                this.fetchBranch()
                 Swal.fire(
                     'Login',
                     'Success to Login',
@@ -98,6 +113,24 @@ export const useHololiveStore = defineStore('hololive', {
                     text: messageError,
                     footer: '<a href="">Why do I have this issue?</a>'
                 })
+            }
+        },
+        async addFavoriteIdol(id) {
+            try {
+                const { data } = await axios({
+                    method: 'POST',
+                    url: origin + '/users/idols/' + id,
+                    headers: {
+                        access_token: localStorage.getItem("access_token")
+                    }
+                })
+                Swal.fire(
+                    'Favorite',
+                    `${data.message}`,
+                    'success'
+                )
+            } catch (error) {
+                console.log(error);
             }
         },
     },

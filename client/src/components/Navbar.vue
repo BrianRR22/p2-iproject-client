@@ -37,7 +37,7 @@ export default{
                 <ul>
                     <li><router-link to="/" class="nav-link scrollto" href="">Home</router-link></li>
                     <li><router-link to="/about" class="nav-link scrollto" href="">About</router-link></li>
-                    <li><router-link to="/talents" class="nav-link scrollto" href="">Talents</router-link></li>
+                    <li><router-link to="/talent" class="nav-link scrollto" href="">Talents</router-link></li>
                     <li><router-link to="/favorite" class="nav-link scrollto" href="" v-if="access_token">Favorite</router-link></li>
                     <li><router-link to="/contact" class="nav-link scrollto" href="" >Contact</router-link></li>
                     <li><router-link to="/login" class="nav-link scrollto" href="" v-if="!access_token">Sign in</router-link></li>

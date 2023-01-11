@@ -985,6 +985,12 @@ div#preloader {
   text-transform: uppercase;
 }
 
+.img-size{
+    width: 100%;
+    height: 32vw;
+    object-fit: contain;
+}
+
 /*--------------------------------------------------------------
 # Review
 --------------------------------------------------------------*/
