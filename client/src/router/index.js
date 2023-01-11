@@ -9,6 +9,7 @@ import Favorite from "../views/Favorite.vue";
 import Detail from "../views/Detail.vue";
 import Spotify from "../views/Spotify.vue";
 import Member from "../views/Member.vue";
+import NotFoundPage from "../views/NotFoundPage.vue";
 
 
 const router = createRouter({
@@ -64,7 +65,33 @@ const router = createRouter({
       name: "member",
       component: Member,
     },
+    {
+      path: "/:pathMatch(.*)*",
+      name: "NotFound",
+      component: NotFoundPage,
+    },
   ],
 });
+
+
+router.beforeEach((to, from, next) => {
+  const access_token = localStorage.getItem('access_token')
+
+  if (to.name === 'login' || to.name === 'register') {
+    if (access_token) {
+      next({ name: 'home' })
+    } else {
+      next()
+    }
+  }else if (to.name === 'favorite' || to.name === 'member') {
+    if (!access_token) {
+      next({ name: 'home' })
+    } else {
+      next()
+    }
+  }else{
+    next()
+  }
+})
 
 export default router;
