@@ -718,9 +718,9 @@ div#preloader {
   background-color: #f9f9f9;
 }
 
-.single-well>a {
+/* .single-well>a {
   display: block;
-}
+} */
 
 .single-well ul li {
   color: #444;
@@ -731,7 +731,7 @@ div#preloader {
 .single-well ul li i {
   color: #3EC1D5;
   margin-right: 5px;
-  font-size: 18px;
+  /* font-size: 18px; */
 }
 
 .single-well p {

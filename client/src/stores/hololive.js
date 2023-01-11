@@ -12,7 +12,8 @@ export const useHololiveStore = defineStore('hololive', {
             username: '',
             idols: [],
             branches: [],
-            favoriteIdols: []
+            favoriteIdols: [],
+            youtubeVideo: ''
         }
     },
     actions: {
@@ -149,5 +150,23 @@ export const useHololiveStore = defineStore('hololive', {
                 console.log(error);
             }
         },
+        fetchOneIdol(id) {
+            return axios({
+                method: 'GET',
+                url: origin + '/idols/' + id
+            })
+        },
+        getYoutubVideo(id) {
+            axios({
+              method: 'GET',
+              url: origin + '/idols/video/' + id,
+            })
+              .then(({ data }) => {
+                this.youtubeVideo = 'https://www.youtube.com/embed/'+ data.videoId
+              })
+              .catch(err => {
+                console.log(err);
+              })
+          },
     },
 })

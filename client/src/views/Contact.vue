@@ -53,7 +53,7 @@
                                     <i class="bi bi-envelope"></i>
                                     <p>
                                         Email: hololiveid@cover-corp.com<br>
-                                        <span>Web: <a href="en.hololive.tv">en.hololive.tv</a></span>
+                                        <span>Web: <a href="https://en.hololive.tv">en.hololive.tv</a></span>
                                     </p>
                                 </div>
                             </div>

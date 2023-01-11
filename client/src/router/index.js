@@ -6,6 +6,7 @@ import About from "../views/About.vue";
 import Contact from "../views/Contact.vue";
 import Talent from "../views/Talent.vue";
 import Favorite from "../views/Favorite.vue";
+import Detail from "../views/Detail.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -44,6 +45,11 @@ const router = createRouter({
       path: "/favorite",
       name: "favorite",
       component: Favorite,
+    },
+    {
+      path: "/detail/:id",
+      name: "detail",
+      component: Detail,
     },
   ],
 });
