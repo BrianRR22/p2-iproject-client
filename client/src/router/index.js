@@ -7,6 +7,8 @@ import Contact from "../views/Contact.vue";
 import Talent from "../views/Talent.vue";
 import Favorite from "../views/Favorite.vue";
 import Detail from "../views/Detail.vue";
+import Spotify from "../views/Spotify.vue";
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -50,6 +52,11 @@ const router = createRouter({
       path: "/detail/:id",
       name: "detail",
       component: Detail,
+    },
+    {
+      path: "/songs/:id",
+      name: "songs",
+      component: Spotify,
     },
   ],
 });

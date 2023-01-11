@@ -6,7 +6,7 @@ origin = 'http://localhost:3000'
 export const useHololiveStore = defineStore('hololive', {
     state() {
         return {
-            song: [],
+            songs: [],
             name: '',
             access_token: '',
             username: '',
@@ -17,28 +17,34 @@ export const useHololiveStore = defineStore('hololive', {
         }
     },
     actions: {
-        songSpotify() {
-            const options = {
+        songSpotify(id) {
+            // axios( {
+            //     method: 'GET',
+            //     url: origin + '/idols/songs/' + id,
+            // });
+            //     .then(function (response) {
+            //         console.log(response.data);
+            //         let song = response.data.data.artist.discography.singles.items
+            //         // song.forEach(el => {
+            //         //     console.log(el.releases.items[0].name); //judul lagu spotify
+            //         // });
+            //     })
+            //     .catch(function (error) {
+            //         console.error(error);
+            //     })
+            axios({
                 method: 'GET',
-                url: 'https://spotify23.p.rapidapi.com/artist_singles/',
-                params: { id: '2Iss9rGmxvoEfVigargjTH', offset: '0', limit: '20' },
-                headers: {
-                    'X-RapidAPI-Key': '37f62bd33cmshc44f509dac943b4p140114jsn4a30c69863c7',
-                    'X-RapidAPI-Host': 'spotify23.p.rapidapi.com'
-                }
-            };
-
-            axios.request(options)
-                .then(function (response) {
-                    // console.log(response.data.data.artist.discography.singles.items);
-                    let song = response.data.data.artist.discography.singles.items
-                    song.forEach(el => {
-                        console.log(el.releases.items[0].name); //judul lagu spotify
-                    });
+                url: origin + '/idols/songs/' + id,
+            })
+                .then(({ data }) => {
+                    console.log(data);
+                    this.songs= data
+                    // let song = data.data.artist.discography.singles.items
+                    // console.log(song);
                 })
-                .catch(function (error) {
-                    console.error(error);
-                });
+                .catch(err => {
+                    console.log(err);
+                })
         },
         async fetchIdols(branchId = null) {
             try {
@@ -158,15 +164,15 @@ export const useHololiveStore = defineStore('hololive', {
         },
         getYoutubVideo(id) {
             axios({
-              method: 'GET',
-              url: origin + '/idols/video/' + id,
+                method: 'GET',
+                url: origin + '/idols/video/' + id,
             })
-              .then(({ data }) => {
-                this.youtubeVideo = 'https://www.youtube.com/embed/'+ data.videoId
-              })
-              .catch(err => {
-                console.log(err);
-              })
-          },
+                .then(({ data }) => {
+                    this.youtubeVideo = 'https://www.youtube.com/embed/' + data.videoId
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        },
     },
 })
