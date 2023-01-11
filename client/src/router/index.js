@@ -8,6 +8,7 @@ import Talent from "../views/Talent.vue";
 import Favorite from "../views/Favorite.vue";
 import Detail from "../views/Detail.vue";
 import Spotify from "../views/Spotify.vue";
+import Member from "../views/Member.vue";
 
 
 const router = createRouter({
@@ -57,6 +58,11 @@ const router = createRouter({
       path: "/songs/:id",
       name: "songs",
       component: Spotify,
+    },
+    {
+      path: "/member",
+      name: "member",
+      component: Member,
     },
   ],
 });

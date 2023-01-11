@@ -15,6 +15,7 @@ export default{
         handleLogout(){
             localStorage.clear()
             this.access_token= ''
+            this.login= false
             this.$router.push('/login')
         }
     },
@@ -39,6 +40,7 @@ export default{
                     <li><router-link to="/about" class="nav-link scrollto" href="">About</router-link></li>
                     <li><router-link to="/talent" class="nav-link scrollto" href="">Talents</router-link></li>
                     <li><router-link to="/favorite" class="nav-link scrollto" href="" v-if="access_token">Favorite</router-link></li>
+                    <li><router-link to="/member" class="nav-link scrollto" href="" v-if="access_token">Member</router-link></li>
                     <li><router-link to="/contact" class="nav-link scrollto" href="" >Contact</router-link></li>
                     <li><router-link to="/login" class="nav-link scrollto" href="" v-if="!access_token">Sign in</router-link></li>
                     <li><router-link to="/register" class="nav-link scrollto" href="" v-if="!access_token">Sign up</router-link></li>

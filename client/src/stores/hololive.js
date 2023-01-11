@@ -13,7 +13,10 @@ export const useHololiveStore = defineStore('hololive', {
             idols: [],
             branches: [],
             favoriteIdols: [],
-            youtubeVideo: ''
+            youtubeVideo: '',
+            user: {},
+            login: false,
+            isSubscribed: ''
         }
     },
     actions: {
@@ -38,7 +41,7 @@ export const useHololiveStore = defineStore('hololive', {
             })
                 .then(({ data }) => {
                     console.log(data);
-                    this.songs= data
+                    this.songs = data
                     // let song = data.data.artist.discography.singles.items
                     // console.log(song);
                 })
@@ -102,10 +105,13 @@ export const useHololiveStore = defineStore('hololive', {
                 })
                 localStorage.setItem("access_token", data.access_token)
                 localStorage.setItem("username", data.username)
+                localStorage.setItem("isSubscribed", data.isSubscribed)
                 this.access_token = data.access_token
                 this.username = data.username
+                this.login= true
                 this.fetchIdols()
                 this.fetchBranch()
+                this.fetchUser()
                 Swal.fire(
                     'Login',
                     'Success to Login',
@@ -174,5 +180,69 @@ export const useHololiveStore = defineStore('hololive', {
                     console.log(err);
                 })
         },
+        async fetchUser() {
+            console.log('masuk?');
+            try {
+                const { data } = await axios({
+                    method: 'GET',
+                    url: origin + `/users`,
+                    headers: {
+                        access_token: localStorage.getItem("access_token")
+                    }
+                })
+                this.isSubscribed= data.isSubscribed
+                this.user = data
+                console.log(this.user, '<<<<<<<<<<');
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        async changeStatus() {
+            try {
+                const { data } = await axios({
+                    method: 'PATCH',
+                    url: origin + '/users/subscription',
+                    headers: {
+                        access_token: localStorage.getItem("access_token")
+                    }
+                })
+                this.fetchUser()
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        async subscribe() {
+            try {
+                const { data } = await axios({
+                    method: 'POST',
+                    url: origin + '/users/generate-midtrans-token',
+                    headers: {
+                        access_token: localStorage.getItem("access_token")
+                    }
+                })
+                let statusMember= this.changeStatus
+                window.snap.pay(data.token, {
+                    onSuccess: function (result) {
+                        /* You may add your own implementation here */
+                        statusMember()
+                        alert("payment success!"); console.log(result);
+                    },
+                    onPending: function (result) {
+                        /* You may add your own implementation here */
+                        alert("wating your payment!"); console.log(result);
+                    },
+                    onError: function (result) {
+                        /* You may add your own implementation here */
+                        alert("payment failed!"); console.log(result);
+                    },
+                    onClose: function () {
+                        /* You may add your own implementation here */
+                        alert('you closed the popup without finishing the payment');
+                    }
+                })
+            } catch (error) {
+                console.log(error);
+            }
+        }
     },
 })
