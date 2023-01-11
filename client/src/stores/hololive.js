@@ -11,7 +11,8 @@ export const useHololiveStore = defineStore('hololive', {
             access_token: '',
             username: '',
             idols: [],
-            branches: []
+            branches: [],
+            favoriteIdols: []
         }
     },
     actions: {
@@ -129,6 +130,21 @@ export const useHololiveStore = defineStore('hololive', {
                     `${data.message}`,
                     'success'
                 )
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        async fetchFavoriteIdols(branchId = null) {
+            try {
+                const { data } = await axios({
+                    method: 'GET',
+                    url: origin + `/users/idols/favorites${branchId ? `?filter[branch]=${branchId}` : ''}`,
+                    headers: {
+                        access_token: localStorage.getItem("access_token")
+                    }
+                })
+                this.favoriteIdols = data
+                console.log(data);
             } catch (error) {
                 console.log(error);
             }
