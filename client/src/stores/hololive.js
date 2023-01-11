@@ -243,6 +243,20 @@ export const useHololiveStore = defineStore('hololive', {
             } catch (error) {
                 console.log(error);
             }
-        }
+        },
+        async deleteFavorite(id) {
+            try {
+                const { data } = await axios({
+                    method: 'DELETE',
+                    url: origin + '/users/idols/' + id,
+                    headers: {
+                        access_token: localStorage.getItem("access_token")
+                    }
+                })
+                this.fetchFavoriteIdols()
+            } catch (error) {
+                console.log(error);
+            }
+        },
     },
 })

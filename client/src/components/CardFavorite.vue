@@ -5,7 +5,7 @@ import { useHololiveStore } from '../stores/hololive'
 export default {
     props: ['idol'],
     methods: {
-        ...mapActions(useHololiveStore, ['addFavoriteIdol'])
+        ...mapActions(useHololiveStore, ['deleteFavorite'])
     }
 }
 </script>
@@ -30,7 +30,7 @@ export default {
                             </router-link>
                         </li>
                         <li>
-                            <a href="" @click.prevent="addFavoriteIdol(idol.id)">
+                            <a href="" @click.prevent="deleteFavorite(idol.Favorites[0]?.id)">
                                 <i class="bi bi-trash"></i>
                             </a>
                         </li>
