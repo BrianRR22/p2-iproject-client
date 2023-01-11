@@ -1,11 +1,11 @@
 <script>
 import { mapActions, mapState } from 'pinia'
 import { useHololiveStore } from '../stores/hololive'
-import Card from '../components/Card.vue'
+import CardFavorite from '../components/CardFavorite.vue'
 
 export default {
     components: {
-        Card
+        CardFavorite
     },
     data(){
         return{
@@ -48,7 +48,7 @@ export default {
                 </div>
             </div>
             <div class="row">
-                <Card v-for="idol in favoriteIdols" :key="idol.id" :idol="idol" />
+                <CardFavorite v-for="idol in favoriteIdols" :key="idol.id" :idol="idol" />
             </div>
         </div>
     </div><!-- End Team Section -->
