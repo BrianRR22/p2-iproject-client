@@ -3,20 +3,14 @@ import { mapActions, mapState } from 'pinia'
 import { useHololiveStore } from '../stores/hololive'
 
 export default {
-    data() {
-        return {
-            sub: ''
-        }
-    },
     computed: {
         ...mapState(useHololiveStore, ['isSubscribed'])
     },
     methods: {
-        ...mapActions(useHololiveStore, ['fetchUser', 'subscribe'])
+        ...mapActions(useHololiveStore, ['fetchUser', 'subscribe']),
     },
     created() {
         this.fetchUser()
-        this.isSubscribed
     }
 }
 

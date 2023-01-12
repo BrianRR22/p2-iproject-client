@@ -120,15 +120,15 @@ export const useHololiveStore = defineStore('hololive', {
                 }
             })
                 .then((result) => {
-                    localStorage.setItem("access_token", data.access_token)
-                    localStorage.setItem("username", data.username)
-                    localStorage.setItem("isSubscribed", data.isSubscribed)
-                    this.access_token = data.access_token
-                    this.username = data.username
+                    localStorage.setItem("access_token", result.data.access_token)
+                    localStorage.setItem("username", result.data.username)
+                    localStorage.setItem("isSubscribed", result.data.isSubscribed)
+                    this.access_token = result.data.access_token
+                    this.username = result.data.username
+                    this.isSubscribed= result.data.isSubscribed
                     this.login = true
                     this.fetchIdols()
                     this.fetchBranch()
-                    this.fetchUser()
                     Swal.fire(
                         'Login',
                         'Success to Login',
@@ -137,13 +137,14 @@ export const useHololiveStore = defineStore('hololive', {
                     this.router.push('/')
                 })
                 .catch(err => {
-                    let messageError = err.response.data.message
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: messageError,
-                        footer: '<a href="">Why do I have this issue?</a>'
-                    })
+                    console.log(err);
+                    // let messageError = err.response.data.message
+                    // Swal.fire({
+                    //     icon: 'error',
+                    //     title: 'Oops...',
+                    //     text: messageError,
+                    //     footer: '<a href="">Why do I have this issue?</a>'
+                    // })
                 })
         },
         async addFavoriteIdol(id) {

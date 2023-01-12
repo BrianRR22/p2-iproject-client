@@ -12,6 +12,7 @@ export default{
         ...mapWritableState(useHololiveStore, ['access_token'])
     },
     methods: {
+        ...mapActions(useHololiveStore, ['fetchUser']),
         handleLogout(){
             localStorage.clear()
             this.access_token= ''
@@ -21,6 +22,9 @@ export default{
     },
     created(){
         this.access_token=localStorage.getItem('access_token')
+        if(this.access_token){
+            this.fetchUser()
+        }
     }
 }
 </script>
