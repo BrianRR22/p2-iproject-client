@@ -12,7 +12,12 @@ export default {
         }
     },
     methods: {
-        ...mapActions(useHololiveStore, ['handleLogin'])
+        ...mapActions(useHololiveStore, ['handleLogin', 'googleOneTap']),
+        callback(response) {
+            // This callback will be triggered when the user selects or login to
+            // his Google account from the popup
+            this.googleOneTap( response.credential)
+        }
     }
 }
 
@@ -60,6 +65,10 @@ export default {
                             <button type="submit" class="btn btn-primary btn-block mb-4">
                                 Login
                             </button>
+                            <div>
+                                <p style="margin-top: 15px;">Or Login With</p>
+                                <GoogleLogin :callback="callback" />
+                             </div>
 
                             <!-- Register buttons -->
                             <div class="text-center">

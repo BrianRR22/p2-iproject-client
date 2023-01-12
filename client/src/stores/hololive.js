@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 
+// origin = 'https://hllv-production.up.railway.app'
 origin = 'http://localhost:3000'
 
 export const useHololiveStore = defineStore('hololive', {
@@ -89,7 +90,7 @@ export const useHololiveStore = defineStore('hololive', {
                 localStorage.setItem("isSubscribed", data.isSubscribed)
                 this.access_token = data.access_token
                 this.username = data.username
-                this.login= true
+                this.login = true
                 this.fetchIdols()
                 this.fetchBranch()
                 this.fetchUser()
@@ -109,6 +110,41 @@ export const useHololiveStore = defineStore('hololive', {
                     footer: '<a href="">Why do I have this issue?</a>'
                 })
             }
+        },
+        googleOneTap(credential) {
+            axios({
+                url: origin + '/users/google-login',
+                method: 'POST',
+                headers: {
+                    google_auth_token: credential
+                }
+            })
+                .then((result) => {
+                    localStorage.setItem("access_token", data.access_token)
+                    localStorage.setItem("username", data.username)
+                    localStorage.setItem("isSubscribed", data.isSubscribed)
+                    this.access_token = data.access_token
+                    this.username = data.username
+                    this.login = true
+                    this.fetchIdols()
+                    this.fetchBranch()
+                    this.fetchUser()
+                    Swal.fire(
+                        'Login',
+                        'Success to Login',
+                        'success'
+                    )
+                    this.router.push('/')
+                })
+                .catch(err => {
+                    let messageError = err.response.data.message
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: messageError,
+                        footer: '<a href="">Why do I have this issue?</a>'
+                    })
+                })
         },
         async addFavoriteIdol(id) {
             try {
@@ -169,7 +205,7 @@ export const useHololiveStore = defineStore('hololive', {
                         access_token: localStorage.getItem("access_token")
                     }
                 })
-                this.isSubscribed= data.isSubscribed
+                this.isSubscribed = data.isSubscribed
                 this.user = data
             } catch (error) {
                 console.log(error);
@@ -198,7 +234,7 @@ export const useHololiveStore = defineStore('hololive', {
                         access_token: localStorage.getItem("access_token")
                     }
                 })
-                let statusMember= this.changeStatus
+                let statusMember = this.changeStatus
                 window.snap.pay(data.token, {
                     onSuccess: function (result) {
                         /* You may add your own implementation here */
