@@ -18,17 +18,15 @@ export default {
     created() {
         this.fetchOneIdol(this.$route.params.id)
             .then(({ data }) => {
-                console.log(data);
                 this.idolDetail = data
-                // this.getYoutubVideo(data.youtubeId)
+                this.getYoutubVideo(data.youtubeId)
             })
             .catch(err => {
-                // if (err.response.status == 404) {
-                //     this.$router.push({ name: 'NotFound' })
-                // } else {
-                //     console.log(err)
-                // }
-                console.log(err)
+                if (err.response.status == 404) {
+                    this.$router.push({ name: 'NotFound' })
+                } else {
+                    console.log(err)
+                }
             })
     }
 }
@@ -65,9 +63,6 @@ export default {
                                 <h4 class="sec-head">{{ idolDetail.name }}</h4>
                             </a>
                             <br>
-                            <!-- <a href="" @click.prevent="$router.push('/' + idolDetail.id)">
-                                <i class="bi bi-spotify"></i>
-                            </a> -->
                             <p>{{ idolDetail.content }}</p>
                             <ul>
                                 <li>
@@ -75,14 +70,10 @@ export default {
                                 </li>
                             </ul>
                             <br>
-                            <!-- <iframe width="560" height="315" :src="youtubeVideo" title="YouTube video player"
+                            <iframe width="560" height="315" :src="youtubeVideo" title="YouTube video player"
                                 frameborder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                allowfullscreen></iframe> -->
-                                <iframe width="560" height="315" src="https://www.youtube.com/embed/x29PMBw1JwI"
-                                        title="YouTube video player" frameborder="0"
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                        allowfullscreen></iframe>
+                                allowfullscreen></iframe>
                             <br>
                             <button type="button" class="btn btn-outline-primary btn-rounded btn-sm bi bi-spotify"
                                 data-mdb-ripple-color="dark" @click="$router.push('/songs/' + idolDetail.spotifyId)" style=""> Spotify</button>

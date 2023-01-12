@@ -20,14 +20,14 @@ export default {
                 <div class="team-social-icon text-center">
                     <ul>
                         <li>
-                            <router-link to="" href="#">
+                            <a @click.prevent="$router.push('/detail/' + idol.id)" href="#">
                                 <i class="bi bi-info"></i>
-                            </router-link>
+                            </a>
                         </li>
                         <li>
-                            <router-link to="" href="#">
+                            <a @click.prevent="$router.push('/songs/' + idol.spotifyId)" href="#">
                                 <i class="bi bi-spotify"></i>
-                            </router-link>
+                            </a>
                         </li>
                         <li>
                             <a href="" @click.prevent="deleteFavorite(idol.Favorites[0]?.id)">

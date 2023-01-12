@@ -245,7 +245,7 @@ export default {
                     <div class="well-middle">
                         <div class="single-well">
                             <a href="#">
-                                <h4 class="sec-head">Vtuber Agency</h4>
+                                <h4 class="sec-head">Hololive Production</h4>
                             </a>
                             <p>
                                 Join our membership with only Rp. 200.000. You can get many benefit such as:

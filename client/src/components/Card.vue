@@ -25,9 +25,9 @@ export default {
                             </a>
                         </li>
                         <li>
-                            <router-link to="" href="#">
+                            <a @click.prevent="$router.push('/songs/' + idol.spotifyId)" href="">
                                 <i class="bi bi-spotify"></i>
-                            </router-link>
+                            </a>
                         </li>
                         <li>
                             <a href="" @click.prevent="addFavoriteIdol(idol.id)">

@@ -17,9 +17,6 @@ export default {
     },
     methods: {
         ...mapActions(useHololiveStore, ['fetchIdols', 'fetchBranch']),
-        click(){
-            console.log('click')
-        }
     },
     created() {
         this.fetchIdols()

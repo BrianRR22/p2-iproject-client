@@ -21,29 +21,12 @@ export const useHololiveStore = defineStore('hololive', {
     },
     actions: {
         songSpotify(id) {
-            // axios( {
-            //     method: 'GET',
-            //     url: origin + '/idols/songs/' + id,
-            // });
-            //     .then(function (response) {
-            //         console.log(response.data);
-            //         let song = response.data.data.artist.discography.singles.items
-            //         // song.forEach(el => {
-            //         //     console.log(el.releases.items[0].name); //judul lagu spotify
-            //         // });
-            //     })
-            //     .catch(function (error) {
-            //         console.error(error);
-            //     })
             axios({
                 method: 'GET',
                 url: origin + '/idols/songs/' + id,
             })
                 .then(({ data }) => {
-                    console.log(data);
                     this.songs = data
-                    // let song = data.data.artist.discography.singles.items
-                    // console.log(song);
                 })
                 .catch(err => {
                     console.log(err);
@@ -56,7 +39,6 @@ export const useHololiveStore = defineStore('hololive', {
                     url: origin + `/idols?${branchId ? `filter[branch]=${branchId}` : ''}`
                 })
                 this.idols = data
-                console.log(data);
             } catch (error) {
                 console.log(error);
             }
@@ -68,7 +50,6 @@ export const useHololiveStore = defineStore('hololive', {
                     url: origin + `/idols/branches`
                 })
                 this.branches = data
-                console.log(data);
             } catch (error) {
                 console.log(error);
             }
@@ -157,7 +138,6 @@ export const useHololiveStore = defineStore('hololive', {
                     }
                 })
                 this.favoriteIdols = data
-                console.log(data);
             } catch (error) {
                 console.log(error);
             }
@@ -181,7 +161,6 @@ export const useHololiveStore = defineStore('hololive', {
                 })
         },
         async fetchUser() {
-            console.log('masuk?');
             try {
                 const { data } = await axios({
                     method: 'GET',
@@ -192,7 +171,6 @@ export const useHololiveStore = defineStore('hololive', {
                 })
                 this.isSubscribed= data.isSubscribed
                 this.user = data
-                console.log(this.user, '<<<<<<<<<<');
             } catch (error) {
                 console.log(error);
             }
