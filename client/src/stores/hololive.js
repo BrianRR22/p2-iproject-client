@@ -1,8 +1,8 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 
-// origin = 'https://hllv-production.up.railway.app'
-origin = 'http://localhost:3000'
+origin = 'https://hllv-production.up.railway.app'
+// origin = 'http://localhost:3000'
 
 export const useHololiveStore = defineStore('hololive', {
     state() {
