@@ -63,10 +63,10 @@ export default {
 
                             <!-- Register buttons -->
                             <div class="text-center">
-                                <p>or sign up with:</p>
+                                <!-- <p>or sign up with:</p>
                                 <button type="button" class="btn btn-link btn-floating mx-1">
                                     <i class="fab fa-facebook-f"></i>
-                                </button>
+                                </button> -->
                             </div>
                         </form>
                     </div>
